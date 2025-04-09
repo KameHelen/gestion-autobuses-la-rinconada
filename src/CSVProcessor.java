@@ -7,7 +7,36 @@ import java.util.*;
 
 public class CSVProcessor {
 
-//buscado en ChatGPT
+
+/* Metodo buscado en ChatGPT y tabla generada por el
+
+     En un entorno real, estos datos se almacenarían en una base de datos.
+
+     Ejemplo de tabla en una base de datos relacional (MySQL o PostgreSQL):
+
+     Tabla: gps_data
+       --------------------------------------------
+       | id | bus_id | latitude | longitude | timestamp           | speed |
+       --------------------------------------------
+       | 1  | BUS01  | 37.4859  | -5.9273   | 2025-04-09T08:00:00 | 25.0  |
+
+     Esta estructura permite realizar consultas SQL, estadísticas y filtrados.
+
+     Alternativamente, en una base de datos NoSQL como MongoDB o Firebase,
+     los registros se guardarían como documentos JSON, por ejemplo:
+
+     {
+       "busId": "BUS01",
+       "latitude": 37.4859,
+       "longitude": -5.9273,
+       "timestamp": "2025-04-09T08:00:00",
+       "speed": 25.0
+      }
+
+      Este enfoque es más flexible, pero menos potente para análisis complejos.
+     */
+
+
 public static List<GPSData> cargarDesdeCSV(String rutaArchivo) {
     List<GPSData> datos = new ArrayList<>();
     DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
@@ -42,6 +71,8 @@ public static List<GPSData> cargarDesdeCSV(String rutaArchivo) {
 
     return datos;
 }
+
+// devuelve los datos que correspondan a un autobus en concreto
     public static List<GPSData> filtrarPorBus(List<GPSData> lista, String busId) {
         List<GPSData> resultado = new ArrayList<>();
         for (GPSData d : lista) {
@@ -52,6 +83,7 @@ public static List<GPSData> cargarDesdeCSV(String rutaArchivo) {
         return resultado;
     }
 
+    // registros en un horario en concreto
     public static List<GPSData> filtrarPorRango(List<GPSData> lista, LocalDateTime inicio, LocalDateTime fin) {
         List<GPSData> resultado = new ArrayList<>();
         for (GPSData d : lista) {
@@ -61,5 +93,6 @@ public static List<GPSData> cargarDesdeCSV(String rutaArchivo) {
         }
         return resultado;
     }
+
 
 }
