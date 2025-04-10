@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,6 +20,19 @@ public class AnalizadorGPS {
         return suma/contador;
 
     }
+
+    public static List<GPSData> detectarParadas(List<GPSData> datos) {
+        List<GPSData> paradas = new ArrayList<>();
+
+        for (GPSData d : datos) {
+            if (d.getSpeed() == 0) {
+                paradas.add(d);
+            }
+        }
+
+        return paradas;
+    }
+
 
 
 }

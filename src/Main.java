@@ -26,15 +26,34 @@ public class Main {
         LocalDateTime fin = LocalDateTime.of(2025, 4, 9, 8, 10);
         List<GPSData> rango = CSVProcessor.filtrarPorRango(datos, inicio, fin);
 
-        System.out.println("\n----- DATOS ENTRE 08:00 Y 08:10 -----");
+       /*
+
+
+       System.out.println("\n----- DATOS ENTRE 08:00 Y 08:10 -----");
         for (GPSData d : rango) {
             System.out.println(d);
         }
-
+*/
 
         // Calcular velocidad media de BUS01
         double media = AnalizadorGPS.calcularVelocidadMedia(bus01);
         System.out.println("\nVelocidad media de BUS01: " + media + " km/h");
+
+
+
+        //numero de paradas
+        List<GPSData> paradasBus01 = AnalizadorGPS.detectarParadas(bus01);
+        System.out.println("\nNúmero de paradas de BUS01: " + paradasBus01.size());
+
+        for (GPSData parada : paradasBus01) {
+            System.out.println("Parada en: " + parada.getLatitude() + ", " + parada.getLongitude() +
+                    " a las " + parada.getTimestamp());
+        }
+
+        System.out.println("\n--- BUS01 - VELOCIDADES ---");
+        for (GPSData d : bus01) {
+            System.out.println("Velocidad: " + d.getSpeed() + " en " + d.getTimestamp());
+        }
 
 
     }
