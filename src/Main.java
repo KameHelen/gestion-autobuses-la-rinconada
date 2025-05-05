@@ -11,8 +11,11 @@ public class Main {
     public static void main(String[] args) {
 
         // Inicializar rutas
+        MapaParadas.cargarDesdeCSV("src/datos/paradas.csv");
         Ruta rutaIda = RepositorioRutas.getRutaIda();
         Ruta rutaVuelta = RepositorioRutas.getRutaVuelta();
+
+
 
         // Generar datos simulados
         List<String> buses = List.of("BUS01", "BUS02", "BUS03");
