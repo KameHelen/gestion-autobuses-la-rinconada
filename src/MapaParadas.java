@@ -88,5 +88,17 @@ public class MapaParadas {
         return paradas.keySet();
     }
 
+    public static List<Parada> getTodasParadas() {
+        List<Parada> resultado = new ArrayList<>();
+
+        for (Map.Entry<String, double[]> entry : paradas.entrySet()) {
+            String nombre = entry.getKey();
+            double[] coords = entry.getValue();
+            resultado.add(new Parada(nombre, coords[0], coords[1]));
+        }
+
+        return resultado;
+    }
+
 
 }

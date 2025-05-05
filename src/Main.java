@@ -82,7 +82,7 @@ public class Main {
                                 ") a las " + p.getTimestamp());
                     }
 
-                    // 🔍 Contar paradas por ruta
+                    // Contar paradas por ruta
                     int paradasIda = AnalizadorGPS.contarParadasPorRuta(datosBus2, RepositorioRutas.getRutaIda());
                     int paradasVuelta = AnalizadorGPS.contarParadasPorRuta(datosBus2, RepositorioRutas.getRutaVuelta());
 
@@ -118,9 +118,6 @@ public class Main {
                     }
                     break;
 
-
-                default:
-                    System.out.println("Opción inválida.");
 
                 case 4:
                     System.out.print("Introduce ID del bus (ej: BUS01): ");
@@ -168,9 +165,14 @@ public class Main {
                 case 5:
                     consultarProximasLlegadas(datos, sc);
 
+
                 case 0:
                     System.out.println("Saliendo del programa...");
                     break;
+
+                default:
+                    System.out.println("Opción inválida.");
+
             }
 
 
