@@ -73,15 +73,15 @@ public static List<GPSData> cargarDesdeCSV(String rutaArchivo) {
 }
 
 // devuelve los datos que correspondan a un autobus en concreto
-    public static List<GPSData> filtrarPorBus(List<GPSData> lista, String busId) {
-        List<GPSData> resultado = new ArrayList<>();
-        for (GPSData d : lista) {
-            if (d.getBusId().equals(busId)) {
-                resultado.add(d);
-            }
+public static List<GPSData> filtrarPorBus(List<GPSData> lista, String busId) {
+    List<GPSData> resultado = new ArrayList<>();
+    for (GPSData d : lista) {
+        if (d.getBusId().equalsIgnoreCase(busId)) {
+            resultado.add(d);
         }
-        return resultado;
     }
+    return resultado;
+}
 
     // registros en un horario en concreto
     public static List<GPSData> filtrarPorRango(List<GPSData> lista, LocalDateTime inicio, LocalDateTime fin) {
@@ -92,6 +92,16 @@ public static List<GPSData> cargarDesdeCSV(String rutaArchivo) {
             }
         }
         return resultado;
+    }
+
+    public static LocalDateTime obtenerUltimoTimestamp(List<GPSData> datos) {
+        LocalDateTime max = LocalDateTime.MIN;
+        for (GPSData d : datos) {
+            if (d.getTimestamp().isAfter(max)) {
+                max = d.getTimestamp();
+            }
+        }
+        return max;
     }
 
 

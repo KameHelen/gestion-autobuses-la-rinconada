@@ -25,7 +25,7 @@ public class AnalizadorGPS {
         List<GPSData> paradas = new ArrayList<>();
 
         for (GPSData d : datos) {
-            if (d.getSpeed() == 0) {
+            if (Math.abs(d.getSpeed()) < 0.01) {
                 paradas.add(d);
             }
         }
@@ -33,6 +33,21 @@ public class AnalizadorGPS {
         return paradas;
     }
 
+    public static int contarParadasPorRuta(List<GPSData> datos, Ruta ruta) {
+        int contador = 0;
+        for (GPSData d : datos) {
+            if (d.getSpeed() == 0) {
+                for (Parada p : ruta.getParadas()) {
+                    double dist = MapaParadas.distancia(d.getLatitude(), d.getLongitude(), p.getLatitud(), p.getLongitud());
+                    if (dist < 0.0005) {
+                        contador++;
+                        break;
+                    }
+                }
+            }
+        }
+        return contador;
+    }
 
 
 }
