@@ -44,16 +44,14 @@ public class MapaParadas {
     }
 
     public static double distancia(double lat1, double lon1, double lat2, double lon2) {
-        return Math.sqrt(Math.pow(lat1 - lat2, 2) + Math.pow(lon1 - lon2, 2));
+        return AnalizadorGPS.calcularDistanciaMetros(lat1, lon1, lat2, lon2);
     }
+
 
     public static double[] getCoordenadas(String nombre) {
         return paradas.getOrDefault(nombre, null);
     }
 
-    public static boolean estaCerca(double lat1, double lon1, double lat2, double lon2) {
-        return distancia(lat1, lon1, lat2, lon2) < 0.0015;
-    }
 
     public static Set<String> getNombresParadas() {
         return paradas.keySet();

@@ -16,22 +16,17 @@ public class Main {
         Ruta rutaVuelta = RepositorioRutas.getRutaVuelta();
 
 
-
         // Generar datos simulados
         List<String> buses = List.of("BUS01", "BUS02", "BUS03");
         LocalDateTime horaInicio = LocalDateTime.of(2025, 4, 9, 8, 0);
 
-        GeneradorSimulacion.generarSimulacionIdaYVuelta(
-                rutaIda,
-                rutaVuelta,
-                buses,
-                horaInicio,
-                "src/datos/datos_simulados.csv"
-        );
+        GeneradorSimulacion.generarSimulacionIdaYVuelta(rutaIda, rutaVuelta, buses, horaInicio, "src/datos/datos_simulados.csv");
 
         // Leer los datos recién generados
         String ruta = "src/datos/datos_simulados.csv";
         List<GPSData> datos = CSVProcessor.cargarDesdeCSV(ruta);
+        // Archivar CSV antiguos (requisito del proyecto)
+        Archivador.archivarCSVAntiguos("src/datos");
         // ExportadorJSON.exportarUltimaPosicion(datos); // Generar JSONs por si se quiere consultar última posición
         SimuladorTiempo.inicializar(LocalDateTime.of(2025, 4, 9, 8, 0));
 
@@ -50,6 +45,7 @@ public class Main {
             System.out.println("3. Ver última posición de un bus");
             System.out.println("4. Modificar coordenadas de un registro (simular cambio de ruta)");
             System.out.println("5. Ver todas las paradas y consultar próximas llegadas");
+            System.out.println("6. Filtrar datos por bus y rango horario");
             System.out.println("0. Salir");
 
             System.out.print("Elige una opción: ");
@@ -59,7 +55,7 @@ public class Main {
             switch (opcion) {
                 case 1:
                     // Velocidad media de un autobús
-                    System.out.print("Introduce ID del bus (ej: BUS01): ");
+                    System.out.print("Introduce ID del bus (BUS01, BUS02, BUS03): ");
                     String bus1 = sc.nextLine();
                     List<GPSData> datosBus1 = CSVProcessor.filtrarPorBus(datos, bus1);
                     double media = AnalizadorGPS.calcularVelocidadMedia(datosBus1);
@@ -67,7 +63,7 @@ public class Main {
                     break;
 
                 case 2:
-                    System.out.print("Introduce ID del bus (ej: BUS01): ");
+                    System.out.print("Introduce ID del bus (BUS01, BUS02, BUS03): ");
                     String bus2 = sc.nextLine();
                     List<GPSData> datosBus2 = CSVProcessor.filtrarPorBus(datos, bus2);
 
@@ -82,8 +78,7 @@ public class Main {
 
                     for (GPSData p : paradas) {
                         String nombreParada = MapaParadas.obtenerNombreParada(p.getLatitude(), p.getLongitude());
-                        System.out.println("Parada en " + nombreParada + " (" + p.getLatitude() + ", " + p.getLongitude() +
-                                ") a las " + p.getTimestamp());
+                        System.out.println("Parada en " + nombreParada + " (" + p.getLatitude() + ", " + p.getLongitude() + ") a las " + p.getTimestamp());
                     }
 
                     // Contar paradas por ruta
@@ -97,10 +92,9 @@ public class Main {
                     break;
 
 
-
                 case 3:
                     // Leer última posición desde archivo JSON
-                    System.out.print("Introduce ID del bus (ej: BUS01): ");
+                    System.out.print("Introduce ID del bus (BUS01, BUS02, BUS03): ");
                     String bus3 = sc.nextLine().toLowerCase();
                     String jsonPath = bus3 + "_status.json";
 
@@ -124,7 +118,7 @@ public class Main {
 
 
                 case 4:
-                    System.out.print("Introduce ID del bus (ej: BUS01): ");
+                    System.out.print("Introduce ID del bus (BUS01, BUS02, BUS03): ");
                     String busIdEdit = sc.nextLine();
 
                     System.out.print("Introduce timestamp exacto (ej: 2025-04-09T08:15:00): ");
@@ -168,6 +162,32 @@ public class Main {
 
                 case 5:
                     consultarProximasLlegadas(datos, sc);
+
+                case 6:
+                    System.out.print("Introduce ID del bus (ej: BUS01): ");
+                    String busFiltro = sc.nextLine();
+                    System.out.print("Introduce fecha inicio (ej: 2025-04-09T08:00): ");
+                    String inicioStr = sc.nextLine();
+                    System.out.print("Introduce fecha fin (ej: 2025-04-09T09:00): ");
+                    String finStr = sc.nextLine();
+
+                    try {
+                        LocalDateTime inicio = LocalDateTime.parse(inicioStr);
+                        LocalDateTime fin = LocalDateTime.parse(finStr);
+
+                        List<GPSData> porBus = CSVProcessor.filtrarPorBus(datos, busFiltro);
+                        List<GPSData> filtrado = AnalizadorGPS.filtrarPorRango(porBus, inicio, fin);
+
+                        System.out.println("Registros encontrados: " + filtrado.size());
+                        for (GPSData d : filtrado) {
+                            System.out.printf("[%s] lat=%.6f, lon=%.6f, vel=%.1f km/h\n",
+                                    d.getTimestamp(), d.getLatitude(), d.getLongitude(), d.getSpeed());
+                        }
+
+                    } catch (Exception e) {
+                        System.out.println("Error: formato incorrecto. Usa yyyy-MM-ddTHH:mm");
+                    }
+                    break;
 
 
                 case 0:
@@ -223,12 +243,12 @@ public class Main {
         double[] coords = {paradaElegida.getLatitud(), paradaElegida.getLongitud()};
 
         LocalDateTime ahora = SimuladorTiempo.ahora();
-        boolean encontrado = false;
+
 
         Map<String, GPSData> proximosPorBus = new HashMap<>();
 
         for (GPSData d : datos) {
-            double distancia = MapaParadas.distancia(d.getLatitude(), d.getLongitude(), coords[0], coords[1]);
+            double distancia = AnalizadorGPS.calcularDistanciaMetros(d.getLatitude(), d.getLongitude(), coords[0], coords[1]);
             boolean futuro = d.getTimestamp().isEqual(ahora) || d.getTimestamp().isAfter(ahora);
 
             if (futuro && distancia < 0.0005) {
@@ -247,8 +267,7 @@ public class Main {
 
             for (GPSData d : llegadasOrdenadas) {
                 long minutos = java.time.Duration.between(ahora, d.getTimestamp()).toMinutes();
-                System.out.println("El bus " + d.getBusId() + " llegará a " + paradaElegida.getNombre() +
-                        " en " + minutos + " minutos (a las " + d.getTimestamp() + ")");
+                System.out.println("El bus " + d.getBusId() + " llegará a " + paradaElegida.getNombre() + " en " + minutos + " minutos (a las " + d.getTimestamp() + ")");
             }
         }
 

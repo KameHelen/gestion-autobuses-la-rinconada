@@ -1,23 +1,26 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 
 public class AnalizadorGPS {
 
 
     //calcula la velocidad media ignorando la velocidad 0 (paradas)
-    public static double calcularVelocidadMedia(List<GPSData> datos){
+    public static double calcularVelocidadMedia(List<GPSData> datos) {
         double suma = 0;
         int contador = 0;
 
-        for(GPSData d : datos){
-            if (d.getSpeed()>0){ //filtrar las paradas
+        for (GPSData d : datos) {
+            if (d.getSpeed() > 0) { //filtrar las paradas
                 suma += d.getSpeed();
                 contador++;
             }
         }
         if (contador == 0) return 0;
-        return suma/contador;
+        return suma / contador;
 
     }
 
@@ -54,6 +57,8 @@ public class AnalizadorGPS {
         }
         return contador;
     }
+
+    //Calcula la distancia real entre dos coordanadas por ChatGPT
     public static double calcularDistanciaMetros(double lat1, double lon1, double lat2, double lon2) {
         final int R = 6371000; // radio de la Tierra en metros
         double latRad1 = Math.toRadians(lat1);
@@ -68,6 +73,19 @@ public class AnalizadorGPS {
 
         return R * c;
     }
+    public static List<GPSData> filtrarPorRango(List<GPSData> lista, LocalDateTime inicio, LocalDateTime fin) {
+        List<GPSData> resultado = new ArrayList<>();
+        for (GPSData d : lista) {
+            if (d.getTimestamp() != null &&
+                    !d.getTimestamp().isBefore(inicio) &&
+                    !d.getTimestamp().isAfter(fin)) {
+                resultado.add(d);
+            }
+        }
+        return resultado;
+    }
+
+
 
 
 }

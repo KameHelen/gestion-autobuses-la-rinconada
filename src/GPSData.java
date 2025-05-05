@@ -1,4 +1,3 @@
-
 import java.time.LocalDateTime;
 
 // En un entorno real, estos datos se almacenarían en una base de datos relacional como MySQL o PostgreSQL:
@@ -55,12 +54,6 @@ public class GPSData {
 
     @Override
     public String toString() {
-        return "GPSData{" +
-                "busId='" + busId + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", timestamp=" + timestamp +
-                ", speed=" + speed +
-                '}';
+        return "GPSData{" + "busId='" + busId + '\'' + ", latitude=" + latitude + ", longitude=" + longitude + ", timestamp=" + timestamp + ", speed=" + speed + '}';
     }
 }
