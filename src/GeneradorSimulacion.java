@@ -33,10 +33,10 @@ public class GeneradorSimulacion {
                 }
             }
 
-            System.out.println("✅ Datos simulados de ida y vuelta generados en: " + archivoSalida);
+            System.out.println("Datos simulados de ida y vuelta generados en: " + archivoSalida);
 
         } catch (Exception e) {
-            System.out.println("❌ Error generando datos simulados: " + e.getMessage());
+            System.out.println("Error generando datos simulados: " + e.getMessage());
         }
     }
 }

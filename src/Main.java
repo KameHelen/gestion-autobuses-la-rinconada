@@ -241,7 +241,7 @@ public class Main {
 
             for (GPSData d : llegadasOrdenadas) {
                 long minutos = java.time.Duration.between(ahora, d.getTimestamp()).toMinutes();
-                System.out.println("✅ El bus " + d.getBusId() + " llegará a " + paradaElegida.getNombre() +
+                System.out.println("El bus " + d.getBusId() + " llegará a " + paradaElegida.getNombre() +
                         " en " + minutos + " minutos (a las " + d.getTimestamp() + ")");
             }
         }
