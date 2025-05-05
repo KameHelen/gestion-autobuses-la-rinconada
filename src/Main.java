@@ -29,6 +29,7 @@ public class Main {
         // Leer los datos recién generados
         String ruta = "src/datos/datos_simulados.csv";
         List<GPSData> datos = CSVProcessor.cargarDesdeCSV(ruta);
+        // ExportadorJSON.exportarUltimaPosicion(datos); // Generar JSONs por si se quiere consultar última posición
         SimuladorTiempo.inicializar(LocalDateTime.of(2025, 4, 9, 8, 0));
 
 

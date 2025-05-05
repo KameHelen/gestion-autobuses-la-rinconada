@@ -27,7 +27,7 @@ public class AnalizadorGPS {
         for (GPSData d : datos) {
             if (Math.abs(d.getSpeed()) < 0.01) {
                 for (Parada p : MapaParadas.getTodasParadas()) {
-                    double distancia = calcularDistanciaMetros(d.getLatitude(), d.getLongitude(), p.getLat(), p.getLon());
+                    double distancia = calcularDistanciaMetros(d.getLatitude(), d.getLongitude(), p.getLatitud(), p.getLongitud());
                     if (distancia < 30) { // margen de 30 metros
                         paradas.add(d);
                         break; // solo hace falta encontrar una parada cercana
