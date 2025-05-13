@@ -13,12 +13,4 @@ public class SimuladorTiempo {
         return ahoraSimulado;
     }
 
-    // Avanzar o retroceder tiempo si quieres más tarde
-    public static void avanzarMinutos(long minutos) {
-        ahoraSimulado = ahoraSimulado.plusMinutes(minutos);
-    }
-
-    public static void retrocederMinutos(long minutos) {
-        ahoraSimulado = ahoraSimulado.minusMinutes(minutos);
-    }
 }

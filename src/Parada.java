@@ -1,4 +1,6 @@
+
 public class Parada {
+
     private String nombre;
     private double latitud;
     private double longitud;

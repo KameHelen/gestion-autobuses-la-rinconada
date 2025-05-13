@@ -3,9 +3,9 @@ import java.io.IOException;
 import java.util.*;
 import com.google.gson.Gson; // Añadido gson-2.10.1.jar manualmente al proyecto
 
-/**
- * Esta clase se encarga de exportar la última posición conocida de cada autobús
- * en formato JSON, utilizando la librería Gson (añadida manualmente al proyecto).
+/*
+  Esta clase se encarga de exportar la última posición conocida de cada autobús
+  en formato JSON, utilizando la librería Gson (añadida manualmente al proyecto).
  */
 public class ExportadorJSON {
 

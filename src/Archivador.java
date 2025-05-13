@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 public class Archivador {
-
+    // archivamos en un csv los archivos antiguos
     public static void archivarCSVAntiguos(String carpetaOrigen) {
         File origen = new File(carpetaOrigen);
         File destino = new File(carpetaOrigen + "/archivados");

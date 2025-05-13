@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class GeneradorSimulacion {
 
-    private static final Random random = new Random();
+    private static Random random = new Random();
 
     public static void generarSimulacionIdaYVuelta(Ruta rutaIda, Ruta rutaVuelta, List<String> busIds, LocalDateTime horaInicio, String archivoSalida) {
         try (PrintWriter pw = new PrintWriter(new FileWriter(archivoSalida))) {

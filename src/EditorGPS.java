@@ -7,7 +7,7 @@ public class EditorGPS {
     public static boolean modificarCoordenadas(List<GPSData> datos, String busId, LocalDateTime timestamp, double nuevaLat, double nuevaLon) {
         for (GPSData d : datos) {
             if (d.getBusId().equals(busId) && d.getTimestamp().equals(timestamp)) {
-                // Creamos un nuevo objeto y lo reemplazamos (inmutable sería ideal, pero aquí modificamos directo)
+                // Creamos un nuevo objeto y lo reemplazamos
                 d.setLatitude(nuevaLat);
                 d.setLongitude(nuevaLon);
                 return true;

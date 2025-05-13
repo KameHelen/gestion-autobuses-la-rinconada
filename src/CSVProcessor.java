@@ -72,7 +72,7 @@ public static List<GPSData> cargarDesdeCSV(String rutaArchivo) {
     return datos;
 }
 
-// devuelve los datos que correspondan a un autobus en concreto
+// Devuelve los datos que correspondan a un autobus en concreto
 public static List<GPSData> filtrarPorBus(List<GPSData> lista, String busId) {
     List<GPSData> resultado = new ArrayList<>();
     for (GPSData d : lista) {
@@ -83,7 +83,7 @@ public static List<GPSData> filtrarPorBus(List<GPSData> lista, String busId) {
     return resultado;
 }
 
-    // registros en un horario en concreto
+    // Registros en un horario en concreto
     public static List<GPSData> filtrarPorRango(List<GPSData> lista, LocalDateTime inicio, LocalDateTime fin) {
         List<GPSData> resultado = new ArrayList<>();
         for (GPSData d : lista) {

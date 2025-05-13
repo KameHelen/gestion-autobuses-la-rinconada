@@ -3,8 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-
 public class AnalizadorGPS {
 
 
@@ -73,6 +71,7 @@ public class AnalizadorGPS {
 
         return R * c;
     }
+
     public static List<GPSData> filtrarPorRango(List<GPSData> lista, LocalDateTime inicio, LocalDateTime fin) {
         List<GPSData> resultado = new ArrayList<>();
         for (GPSData d : lista) {
@@ -84,8 +83,6 @@ public class AnalizadorGPS {
         }
         return resultado;
     }
-
-
 
 
 }

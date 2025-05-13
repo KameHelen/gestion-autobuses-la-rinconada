@@ -22,12 +22,4 @@ public class Ruta {
         return nombre;
     }
 
-    public void mostrarParadas() {
-        System.out.println("--- Ruta: " + nombre + " ---");
-        int i = 1;
-        for (Parada p : paradas) {
-            System.out.println(i + ". " + p);
-            i++;
-        }
-    }
 }
