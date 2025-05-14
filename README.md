@@ -94,7 +94,7 @@ Elena Mesa — Proyecto de Digitalización DAM
 
 ---
 
-## 📎 Enlace al Repositorio
-[Enlace a GitHub] (https://github.com/KameHelen/gestion-autobuses-la-rinconada)
+## Enlace al Repositorio
+[[Enlace a GitHub](https://github.com/KameHelen/gestion-autobuses-la-rinconada)]
 
 ---
